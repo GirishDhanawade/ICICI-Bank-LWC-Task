@@ -1,0 +1,73 @@
+<template>
+    <lightning-card if:true={myButtons}>
+        <div class="title-buttons-container" style="background-color: orange;">
+            <div class="title-text">Welcome to ICICI Bank</div>
+            <div class="newButtons">
+                <lightning-button label="Login" onclick={handleLogin}
+                    style="margin-right: 10px;"></lightning-button>
+                <lightning-button label="Create New Account" onclick={handleCreate}
+                    style="margin-left: 10px;"></lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+    <lightning-card if:true={showImages}>
+        <img src={bankImageUrl} alt="Bank Image">
+    </lightning-card>
+    <lightning-card>
+        <template if:true={showMyNewForm}>
+            <lightning-record-form object-api-name={objectApiName} fields={fields}></lightning-record-form>
+        </template>
+    </lightning-card>
+    <!-- Login Page starts here -->
+    <lightning-card>
+        <template if:true={showAccountType}>
+            <label for="account-type">Select Account Type</label>
+            <lightning-combobox name="account-type" value={accountType} options={accountTypeOptions}
+                onchange={handleAccountTypeChange}></lightning-combobox>
+        </template>
+    </lightning-card>
+    <lightning-card>
+        <template if:true={showForm}>
+            <form onsubmit={handleLoginFormSubmit}>
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-no-row-hover">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col">
+                                <div class="slds-truncate">Field</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate">Value</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                <div class="slds-truncate">Customer ID</div>
+                            </th>
+                            <td>
+                                <lightning-input type="text" name="customer_Id" value={customer_Id}
+                                    onchange={handleInputChange}></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <div class="slds-truncate">Password</div>
+                            </th>
+                            <td>
+                                <lightning-input type="password" name="password" value={password}
+                                    onchange={handleInputChange}></lightning-input>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="slds-m-top_medium">
+                    <lightning-button variant="brand" type="submit" label="Login"></lightning-button>
+                </div>
+            </form>
+        </template>
+    </lightning-card>    
+    <!-- Login Page ends here -->
+    <lightning-card if:true={showFinalForm}>  
+    </lightning-card>
+</template>
