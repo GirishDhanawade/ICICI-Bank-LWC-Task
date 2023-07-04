@@ -1,33 +1,27 @@
 <template>
-    <lightning-card if:true={myButtons}>
+    <lightning-card if:true={showWelcomeCard}>
         <div class="title-buttons-container" style="background-color: orange;">
             <div class="title-text">Welcome to ICICI Bank</div>
             <div class="newButtons">
-                <lightning-button label="Login" onclick={handleLogin}
-                    style="margin-right: 10px;"></lightning-button>
-                <lightning-button label="Create New Account" onclick={handleCreate}
-                    style="margin-left: 10px;"></lightning-button>
+                <lightning-button label="Login" onclick={handleLogin} style="margin-right: 10px;"></lightning-button>
+                <lightning-button label="Create New Account" onclick={handleCreate} style="margin-left: 10px;"></lightning-button>
             </div>
         </div>
     </lightning-card>
     <lightning-card if:true={showImages}>
         <img src={bankImageUrl} alt="Bank Image">
     </lightning-card>
-    <lightning-card>
-        <template if:true={showMyNewForm}>
-            <lightning-record-form object-api-name={objectApiName} fields={fields}></lightning-record-form>
-        </template>
+    <lightning-card if:true={showMyNewForm}>
+        <lightning-record-form object-api-name={objectApiName} fields={fields}></lightning-record-form>
     </lightning-card>
-    <!-- Login Page starts here -->
-    <lightning-card>
-        <template if:true={showAccountType}>
+    <lightning-card if:true={showAccountType}>
+        <div class="slds-m-around_medium">
             <label for="account-type">Select Account Type</label>
-            <lightning-combobox name="account-type" value={accountType} options={accountTypeOptions}
-                onchange={handleAccountTypeChange}></lightning-combobox>
-        </template>
+            <lightning-combobox name="account-type" value={accountType} options={accountTypeOptions} onchange={handleAccountTypeChange}></lightning-combobox>
+        </div>
     </lightning-card>
-    <lightning-card>
-        <template if:true={showForm}>
+    <lightning-card if:true={showForm}>
+        <div class="slds-m-around_medium">
             <form onsubmit={handleLoginFormSubmit}>
                 <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-no-row-hover">
                     <thead>
@@ -46,8 +40,7 @@
                                 <div class="slds-truncate">Customer ID</div>
                             </th>
                             <td>
-                                <lightning-input type="text" name="customer_Id" value={customer_Id}
-                                    onchange={handleInputChange}></lightning-input>
+                                <lightning-input type="text" name="customer_id" value={customerId} onchange={handleInputChange}></lightning-input>
                             </td>
                         </tr>
                         <tr>
@@ -55,8 +48,7 @@
                                 <div class="slds-truncate">Password</div>
                             </th>
                             <td>
-                                <lightning-input type="password" name="password" value={password}
-                                    onchange={handleInputChange}></lightning-input>
+                                <lightning-input type="password" name="password" value={password} onchange={handleInputChange}></lightning-input>
                             </td>
                         </tr>
                     </tbody>
@@ -65,9 +57,91 @@
                     <lightning-button variant="brand" type="submit" label="Login"></lightning-button>
                 </div>
             </form>
-        </template>
-    </lightning-card>    
-    <!-- Login Page ends here -->
-    <lightning-card if:true={showFinalForm}>  
+        </div>
     </lightning-card>
+    <lightning-card if:true={showDetailPageTable}>
+        <div class="slds-m-around_medium">
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-no-row-hover">
+                <thead>
+                    <tr class="slds-text-title_caps">
+                        <th colspan="2" scope="colgroup">
+                            <div class="slds-truncate">Customer Details</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">
+                            <div class="slds-truncate">Name</div>
+                        </th>
+                        <td>
+                            <template for:each={customerData} for:item="customer">
+                                <div key={customer.Id}>{customer.Name__c}</div>
+                            </template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <div class="slds-truncate">Email</div>
+                        </th>
+                        <td>
+                            <template for:each={customerData} for:item="customer">
+                                <div key={customer.Id}>{customer.Email__c}</div>
+                            </template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <div class="slds-truncate">Birth Date</div>
+                        </th>
+                        <td>
+                            <template for:each={customerData} for:item="customer">
+                                <div key={customer.Id}>{customer.BirthDate__c}</div>
+                            </template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <div class="slds-truncate">Mobile</div>
+                        </th>
+                        <td>
+                            <template for:each={customerData} for:item="customer">
+                                <div key={customer.Id}>{customer.Contact_Number__c}</div>
+                            </template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <div class="slds-truncate">Address</div>
+                        </th>
+                        <td>
+                            <template for:each={customerData} for:item="customer">
+                                <div key={customer.Id}>{customer.Address__c}</div>
+                            </template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <div class="slds-truncate">Account Type</div>
+                        </th>
+                        <td>
+                            <template for:each={customerData} for:item="customer">
+                                <div key={customer.Id}>{customer.Account_Type__c}</div>
+                            </template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <div class="slds-truncate">Bank Balance</div>
+                        </th>
+                        <td>
+                            <template for:each={customerData} for:item="customer">
+                                <div key={customer.Id}>{customer.Bank_Balance__c}</div>
+                            </template>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </lightning-card>   
 </template>
